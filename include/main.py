@@ -41,29 +41,57 @@ class Main:
                         for item in type_value:
                             try:
                                 if item == str:
-                                    try:
-                                        float(value)
-                                        continue
-                                    except ValueError:
-                                        if value.isnumeric():
+                                    if len(type_value)==1:
+                                        try:
+                                            float(value)
                                             continue
-
-                                elif item == int:
-                                    if not value.isnumeric():
-                                        continue
-                                value=item(value)
-                                result = True
-                                break
+                                        except ValueError:
+                                            if value.isnumeric():
+                                                continue
+                                    else:
+                                        value=item(value)
+                                        result = True
+                                        break
                             except:
                                 continue
-
+                        if not result:
+                            for item in type_value:
+                                try:
+                                    if item == float:
+                                        if len(type_value)==1:
+                                            if len(value)>0:
+                                                if value[0]=='-':
+                                                        if value[1:len(value)].isnumeric():
+                                                            continue
+                                                else:
+                                                    if value.isnumeric():
+                                                        continue
+                                    elif item == int:
+                                        if len(type_value)==1:
+                                            try:
+                                                if len(value)>0:
+                                                    if value[0]=='-':
+                                                        if not value[1:len(value)].isnumeric():
+                                                            continue
+                                                    elif not value.isnumeric():
+                                                        continue
+                                            except ValueError:
+                                                    continue
+                                        else:
+                                            continue
+                                    value=item(value)
+                                    result = True
+                                    break
+                                except:
+                                    continue
                         if not result:
                             raise Exception()
                     except:
                         print("Некорректное значение, ожидается {0}, пожалуйста повторите ввод!".format(tuple[i]["type"]))
                         continue
             elif "out" in tuple[i]:
-                value = tuple[i]["out"]
+                out = tuple[i]["out"]
+                value = out
 
             try:
                 if "def" in tuple[i]:
@@ -74,6 +102,9 @@ class Main:
                 if e.args[0]=="PositiveNumber":
                     i-=1
                     print("Некорректное значение, ожидается положительное число, пожалуйста повторите ввод!")
+                elif e.args[0]=="NegativeNumber":
+                    i-=1
+                    print("Некорректное значение, ожидается отрицательное число, пожалуйста повторите ввод!")                    
                 elif e.args[0]=="StrIsNotNumeric":
                     i-=1
                     print("Некорректное значение, ожидается число, пожалуйста повторите ввод!")
@@ -85,9 +116,11 @@ class Main:
                     print("Значение вне диапазона, пожалуйста повторите ввод!") 
                 elif e.args[0]=="ValueIsNull":
                     i-=1
-                    print("Некорректное значение, оно не должно быть равно нулю, пожалуйста повторите ввод!") 
+                    print("Некорректное значение, оно не должно быть равно нулю, пожалуйста повторите ввод!")
+                elif e.args[0]=="Repeat":
+                    i-=1                    
                 elif e.args[0]=="ProgramStop":
-                    self.IsStopped=True
+                    self.IsStopped=True                
                 else:
                     print("Ошибка в конфигурации: "+e)               
                 continue
