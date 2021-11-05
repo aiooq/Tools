@@ -14,13 +14,13 @@ try:
 
     try:
         from tasks.task2 import Main as task2
-        tasks.append(task2()())
+        #tasks.append(task2()())
     except ImportError:
         pass
 
     try:
         from tasks.task3 import Main as task3
-        tasks.append(task3()())
+        #tasks.append(task3()())
     except ImportError:
         pass
 
@@ -32,19 +32,19 @@ try:
 
     try:
         from tasks.task5 import Main as task5
-        #tasks.append(task5()())
+        tasks.append(task5()())
     except ImportError:
         pass
 
     try:
         from tasks.task6 import Main as task6
-        #tasks.append(task6()())
+        tasks.append(task6()())
     except ImportError:
         pass
 
     try:
         from tasks.task7 import Main as task7
-        #tasks.append(task7()())
+        tasks.append(task7()())
     except ImportError:
         pass    
 

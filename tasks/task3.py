@@ -3,8 +3,8 @@
     Подсказка: использовать функцию range() и генератор.'''
 class Main:
     def __call__(self):
-        config = (({"out":"Результат = {0}", "def":self.FuncOut}))
+        config = (({"out":"Результат = {0}", "def":self.FuncMain}))
         return config
 
-    def FuncOut(self, value, out):
-        return out.format([i for i in range(20,240,1) if i % 20 == 0 or i % 21 == 0])
+    def FuncMain(self, value, out):
+        return out.format([i for i in range(21,240,1) if i % 20 == 0 or i % 21 == 0])

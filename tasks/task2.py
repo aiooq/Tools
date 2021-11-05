@@ -15,11 +15,13 @@ class Main:
             if self.list_orig[i-1]<self.list_orig[i]:
                 yield self.list_orig[i]
 
+    # Первый вариант решения
     def FuncMain_first(self, value, out):
         list_new=list()
         for i in self.FuncGen():
             list_new.append(i)
         return out.format(list_new)
 
+    # Второй вариант решения
     def FuncMain_second(self, value, out):
         return out.format([self.list_orig[i] for i in range(1,len(self.list_orig),1) if self.list_orig[i-1]<self.list_orig[i]])

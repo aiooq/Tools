@@ -2,29 +2,19 @@
     В список должны войти четные числа от 100 до 1000 (включая границы). 
     Необходимо получить результат вычисления произведения всех элементов списка.
     Подсказка: использовать функцию reduce().'''
+
+from functools import reduce    
 class Main:
 
     def __init__(self):
-        self.sum=0
+        self.list_gen=[i for i in range(100,1001,2)]
 
     def __call__(self):
-        config = (({"in":"Введите строку чисел, разделенных пробелом (или все кроме числа для выхода): ","out":"Сумма чисел = {0}", "def":self.FuncSum}))
-        return config 
+        config = (({"out":"Результат = {0}", "def":self.FuncMain}))
+        return config
 
-    def FuncSum(self, value, out):
-        values=value.split(" ")
+    def FuncMul(self, x, y):
+        return x*y
 
-        for number in values:
-            if number=="":
-                continue
-
-            try:
-                number=float(number)
-                self.sum+=number
-            except:
-                print(out.format(self.sum))
-                self.sum=0
-                return#raise Exception("ProgramStop")
-
-        print(out.format(self.sum))
-        raise Exception("Repeat")
+    def FuncMain(self, value, out):
+        return out.format(reduce(self.FuncMul,self.list_gen))
