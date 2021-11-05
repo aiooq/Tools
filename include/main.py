@@ -15,6 +15,52 @@ class Main:
 
         print("Завершение программы")
 
+    @staticmethod
+    def GetValueByType(value, type_values):
+        for item in type_values:
+            try:
+                if item == str:
+                    if len(type_values)==1:
+                        try:
+                            float(value)
+                            continue
+                        except ValueError:
+                            if value.isnumeric():
+                                continue
+                    else:
+                        return item(value)
+            except:
+                continue
+
+        for item in type_values:
+            try:
+                if item == float:
+                    if len(type_values)==1:
+                        if len(value)>0:
+                            if value[0]=='-':
+                                    if value[1:len(value)].isnumeric():
+                                        continue
+                            else:
+                                if value.isnumeric():
+                                    continue
+                elif item == int:
+                    if len(type_values)==1:
+                        try:
+                            if len(value)>0:
+                                if value[0]=='-':
+                                    if not value[1:len(value)].isnumeric():
+                                        continue
+                                elif not value.isnumeric():
+                                    continue
+                        except ValueError:
+                                continue
+                    else:
+                        continue
+                return item(value)
+            except:
+                continue
+        return None
+
     def main(self, tuple):
         i=0
         while len(tuple)>i and not self.IsStopped:
@@ -33,59 +79,14 @@ class Main:
 
                 if "type" in tuple[i]:
                     try:
-                        type_value=tuple[i]["type"]
-                        if type(type_value)==type:
-                            type_value={type_value}
+                        type_values=tuple[i]["type"]
+                        if type(type_values)==type:
+                            type_values={type_values}
                         
-                        result = False
-                        for item in type_value:
-                            try:
-                                if item == str:
-                                    if len(type_value)==1:
-                                        try:
-                                            float(value)
-                                            continue
-                                        except ValueError:
-                                            if value.isnumeric():
-                                                continue
-                                    else:
-                                        value=item(value)
-                                        result = True
-                                        break
-                            except:
-                                continue
-                        if not result:
-                            for item in type_value:
-                                try:
-                                    if item == float:
-                                        if len(type_value)==1:
-                                            if len(value)>0:
-                                                if value[0]=='-':
-                                                        if value[1:len(value)].isnumeric():
-                                                            continue
-                                                else:
-                                                    if value.isnumeric():
-                                                        continue
-                                    elif item == int:
-                                        if len(type_value)==1:
-                                            try:
-                                                if len(value)>0:
-                                                    if value[0]=='-':
-                                                        if not value[1:len(value)].isnumeric():
-                                                            continue
-                                                    elif not value.isnumeric():
-                                                        continue
-                                            except ValueError:
-                                                    continue
-                                        else:
-                                            continue
-                                    value=item(value)
-                                    result = True
-                                    break
-                                except:
-                                    continue
-                        if not result:
+                        value=Main.GetValueByType(value, type_values)
+                        if value==None:
                             raise Exception()
+                        
                     except:
                         print("Некорректное значение, ожидается {0}, пожалуйста повторите ввод!".format(tuple[i]["type"]))
                         continue
@@ -99,30 +100,30 @@ class Main:
                 if value != None:
                     print(value)
             except Exception as e:
-                if e.args[0]=="PositiveNumber":
+                if str(e)=="PositiveNumber":
                     i-=1
                     print("Некорректное значение, ожидается положительное число, пожалуйста повторите ввод!")
-                elif e.args[0]=="NegativeNumber":
+                elif str(e)=="NegativeNumber":
                     i-=1
                     print("Некорректное значение, ожидается отрицательное число, пожалуйста повторите ввод!")                    
-                elif e.args[0]=="StrIsNotNumeric":
+                elif str(e)=="StrIsNotNumeric":
                     i-=1
                     print("Некорректное значение, ожидается число, пожалуйста повторите ввод!")
-                elif e.args[0]=="StrFormatIsNotValid":
+                elif str(e)=="StrFormatIsNotValid":
                     i-=1
                     print("Некорректный формат, пожалуйста смотрите пример и повторите ввод!")
-                elif e.args[0]=="ValueOutOfRange":
+                elif str(e)=="ValueOutOfRange":
                     i-=1
                     print("Значение вне диапазона, пожалуйста повторите ввод!") 
-                elif e.args[0]=="ValueIsNull":
+                elif str(e)=="ValueIsNull":
                     i-=1
                     print("Некорректное значение, оно не должно быть равно нулю, пожалуйста повторите ввод!")
-                elif e.args[0]=="Repeat":
+                elif str(e)=="Repeat":
                     i-=1                    
-                elif e.args[0]=="ProgramStop":
+                elif str(e)=="ProgramStop":
                     self.IsStopped=True                
                 else:
-                    print("Ошибка в конфигурации: "+e)               
+                    print("Ошибка в конфигурации: "+str(e))               
                 continue
             finally:
                 i+=1        
