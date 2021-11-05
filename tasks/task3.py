@@ -3,11 +3,8 @@
     Подсказка: использовать функцию range() и генератор.'''
 class Main:
     def __call__(self):
-        config = (({"out":"Сумма двух наибольших аргументов = {0}", "def":self.FuncOut}))
+        config = (({"out":"Результат = {0}", "def":self.FuncOut}))
         return config
 
     def FuncOut(self, value, out):
-        return out.format(self.my_func(*[7,5,9]))
-
-    def my_func(self, *args):
-        return sum(sorted(args, reverse=True)[0:2])
+        return out.format([i for i in range(20,240,1) if i % 20 == 0 or i % 21 == 0])

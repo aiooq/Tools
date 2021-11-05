@@ -20,7 +20,7 @@ try:
 
     try:
         from tasks.task3 import Main as task3
-        #tasks.append(task3()())
+        tasks.append(task3()())
     except ImportError:
         pass
 

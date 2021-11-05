@@ -7,7 +7,7 @@ class Main:
         self.list_orig = [300, 2, 12, 44, 1, 1, 4, 10, 7, 1, 78, 123, 55]
 
     def __call__(self):
-        config = (({"out":"Результат: {0}", "def":self.FuncMain}))
+        config = (({"out":"Результат: {0}", "def":self.FuncMain_second}))
         return config
 
     def FuncGen(self):
@@ -15,8 +15,11 @@ class Main:
             if self.list_orig[i-1]<self.list_orig[i]:
                 yield self.list_orig[i]
 
-    def FuncMain(self, value, out):
+    def FuncMain_first(self, value, out):
         list_new=list()
         for i in self.FuncGen():
             list_new.append(i)
         return out.format(list_new)
+
+    def FuncMain_second(self, value, out):
+        return out.format([self.list_orig[i] for i in range(1,len(self.list_orig),1) if self.list_orig[i-1]<self.list_orig[i]])
