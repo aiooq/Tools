@@ -6,29 +6,32 @@
     Необходимо предусмотреть условие его завершения.
     Например, в первом задании выводим целые числа, начиная с 3, а при достижении числа 10 завершаем цикл. 
     Во втором также необходимо предусмотреть условие, при котором повторение элементов списка будет прекращено.'''
+from itertools import count,cycle
 class Main:
     def __call__(self):
-        config = (({"in":"Введите слова из маленьких латинских букв, разделенных пробелом: ","out":"Результат = {0}", "def":self.FuncResult}))
+        config = (
+            ({"def":self.FuncA}),
+            ({"def":self.FuncB}))
         return config 
 
-    # Используем стандартную функцию для установки заглавной буквы в слове
-    def int_func_first(self, text):
-        return text.capitalize()
+    def FuncA(self, value, out):
+        c = count(3)
+        i = next(c)
+        while i<10:
+            print (i,end=" ")
+            i = next(c)
+        print ("end FuncA")
+        '''for i in c1:
+            if i>=10:
+                break
+            print (i)'''
 
-    # Используем собственную реализацию для установки заглавной буквы в слове
-    def int_func_second(self, text):
-        length = len(text)
-        if length<=0 or not text[0:1].isalpha():
-            return text
-        return text[0:1].upper()+text[1:length]
-
-    # Используем стандартную функцию для установки заглавной буквы во всех словах в переданной строке (по сути почти вся наша программа)
-    def int_func_third(self, text):
-        return text.title()
-
-    def FuncResult(self, value, out):
-        words = value.split(" ")
-        result = ""
-        for word in words:
-            result += self.int_func_first(word) + " "
-        return out.format(result)
+    def FuncB(self, value, out):
+        c = cycle([4,8,15,16,23,42])
+        count=0
+        for i in c:
+            if count >= 12:
+                break
+            print (i,end=" ")
+            count+=1
+        print ("end FuncB")

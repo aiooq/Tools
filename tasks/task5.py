@@ -3,7 +3,7 @@
     Необходимо получить результат вычисления произведения всех элементов списка.
     Подсказка: использовать функцию reduce().'''
 
-from functools import reduce    
+from functools import reduce   
 class Main:
 
     def __init__(self):
